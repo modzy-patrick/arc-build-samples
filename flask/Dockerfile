@@ -10,13 +10,13 @@ COPY . .
 RUN ls
 
 # Install any needed dependencies specified in requirements.txt
-RUN pip install --no-cache-dir -r app/requirements.txt
+RUN pip install --no-cache-dir -r flask/app/requirements.txt
 
 # Make port 8000 available to the world outside this container
 EXPOSE 80
 
 # Define environment variable
-ENV FLASK_APP=app/app.py
+ENV FLASK_APP=flask/app/app.py
 
 # Run flask when the container launches
 CMD ["flask", "run", "--host=0.0.0.0", "--port=80"]

@@ -8,7 +8,7 @@ permissions: write-all
 jobs: 
   kaniko-build: 
     name: build 
-    runs-on: ubuntu-latest
+    runs-on: arc-runner-set2
     steps: 
     - uses: actions/checkout@v3 
 

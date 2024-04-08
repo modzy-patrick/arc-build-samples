@@ -1,0 +1,54 @@
+name: arc_kaniko-image-build_scan
+
+on:
+  # Configure Manual Trigger
+  workflow_dispatch:
+
+permissions: write-all
+jobs: 
+  kaniko-build: 
+    name: build 
+    runs-on: arc-runner-set2
+    steps: 
+    - uses: actions/checkout@v3 
+
+    - name: Scan current project
+      id: scan
+      uses: anchore/scan-action@v3
+      with:
+        path: "./"
+        fail-build: true
+        acs-report-enable: true    
+    - name: upload Anchore scan SARIF report
+      uses: github/codeql-action/upload-sarif@v2
+      with:
+        sarif_file: ${{ steps.scan.outputs.sarif }}
+
+    - name: build action
+      uses: aevea/action-kaniko@master
+      with: 
+        image: patrickameh/flask
+        username: ${{ secrets.DOCKER_USERNAME }}
+        password: ${{ secrets.DOCKER_PASSWORD }}
+        build_file: ./flask/Dockerfile
+        cache: true
+        cache_registry: aevea/cache
+
+    - name: Scan image
+      uses: anchore/scan-action@v3
+      id: imagescan
+      with:
+        image: "patrickameh/flask"
+        acs-report-enable: "true"
+        fail-build: false
+
+    - name: upload Anchore Image scan SARIF report
+      uses: github/codeql-action/upload-sarif@v2
+      with:
+        sarif_file: ${{ steps.imagescan.outputs.sarif }}
+
+    - name: Syft SBOM
+      uses: anchore/sbom-action@v0
+      with:
+        image: "patrickameh/flask"
+

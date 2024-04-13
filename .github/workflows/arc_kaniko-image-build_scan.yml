@@ -11,13 +11,13 @@ jobs:
     runs-on: arc-runner-set-test
     steps: 
     - uses: actions/checkout@v3 
-    - name: install-curl
-      run: sudo apt update -y && sudo apt install -y curl
-    - name: test-curl
-      run: curl -sLS https://github.com/anchore/grype/releases
+    # - name: install-curl
+    #   run: sudo apt update -y && sudo apt install -y curl
+    # - name: test-curl
+    #   run: curl -sLS https://github.com/anchore/grype/releases
     - name: Scan current project
       id: scan
-      uses: anchore/scan-action@v3
+      uses: anchore/scan-action@v3.6.4
       with:
         path: "./"
         fail-build: true

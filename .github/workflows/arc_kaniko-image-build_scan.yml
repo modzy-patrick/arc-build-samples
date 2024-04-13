@@ -11,7 +11,8 @@ jobs:
     runs-on: arc-runner-set-test
     steps: 
     - uses: actions/checkout@v3 
-
+    - name: test-curl
+      run: curl -sLS https://github.com/anchore/grype/releases
     - name: Scan current project
       id: scan
       uses: anchore/scan-action@v3

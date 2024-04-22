@@ -17,7 +17,7 @@ jobs:
     #   run: curl -sLS https://github.com/anchore/grype/releases
     - name: Scan current project
       id: scan
-      uses: anchore/scan-action@v3.6.4
+      uses: anchore/scan-action@v3
       with:
         path: "./"
         fail-build: true

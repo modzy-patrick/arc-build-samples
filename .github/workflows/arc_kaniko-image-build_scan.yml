@@ -15,17 +15,17 @@ jobs:
     #   run: sudo apt update -y && sudo apt install -y curl
     # - name: test-curl
     #   run: curl -sLS https://github.com/anchore/grype/releases
-    - name: Scan current project
-      id: scan
-      uses: anchore/scan-action@v3
-      with:
-        path: "./"
-        fail-build: true
-        acs-report-enable: true    
-    - name: upload Anchore scan SARIF report
-      uses: github/codeql-action/upload-sarif@v2
-      with:
-        sarif_file: ${{ steps.scan.outputs.sarif }}
+    # - name: Scan current project
+    #  id: scan
+    #  uses: anchore/scan-action@v3
+    #  with:
+    #    path: "./"
+    #    fail-build: true
+    #    acs-report-enable: true    
+    #- name: upload Anchore scan SARIF report
+    #  uses: github/codeql-action/upload-sarif@v2
+    #  with:
+    #    sarif_file: ${{ steps.scan.outputs.sarif }}
 
     - name: build action
       uses: aevea/action-kaniko@master
